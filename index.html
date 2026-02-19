@@ -5,9 +5,12 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Authenticating Uniordle...</title>
 
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Lexend:wght@400;500;600&display=swap" rel="stylesheet">
+
   <script>
     (function() {
-      // Pull the theme from localStorage to match the user's game settings
       const savedTheme = localStorage.getItem('flutter.dark_mode_enabled');
       const darkColor = '#00121f';
       const lightColor = '#F8FAFC';
@@ -45,7 +48,9 @@
       flex-direction: column;
       align-items: center;
       justify-content: center;
-      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      font-family: 'Lexend', -apple-system, BlinkMacSystemFont, sans-serif;
+      overflow: hidden;
+      text-align: center;
     }
 
     .loader {
@@ -60,8 +65,19 @@
       margin-bottom: 24px;
     }
 
-    h1 { font-size: 1.5rem; margin: 0; font-weight: 600; }
-    p { opacity: 0.8; margin-top: 8px; }
+    h1 { 
+      font-size: 1.5rem; 
+      margin: 0; 
+      font-weight: 600; 
+      letter-spacing: -0.5px;
+    }
+
+    p { 
+      opacity: 0.7; 
+      margin-top: 8px; 
+      font-size: 1rem;
+      font-weight: 400;
+    }
 
     @keyframes rotation {
       0% { transform: rotate(0deg); }
@@ -69,11 +85,12 @@
     }
 
     #manual-link {
-      margin-top: 20px;
+      margin-top: 24px;
       color: var(--loader-color);
-      text-decoration: none;
-      font-size: 0.9rem;
+      text-decoration: underline;
+      font-size: 0.85rem;
       font-weight: 500;
+      cursor: pointer;
     }
   </style>
 </head>
@@ -85,25 +102,17 @@
   <a href="#" id="manual-link">Click here if the game doesn't open</a>
 
   <script>
-    // 1. Capture the Supabase session data from the URL
     const hash = window.location.hash;
     
-    // 2. Your custom Windows protocol
     const appScheme = "io.supabase.uniordle://login-callback/";
     
-    // 3. Combine them
     const deepLink = appScheme + hash;
 
-    // 4. Update the fallback link
     document.getElementById('manual-link').href = deepLink;
 
-    // 5. Try to open the app immediately
     window.location.href = deepLink;
 
-    // 6. Optional: Auto-close the tab after 5 seconds
     setTimeout(() => {
-      // Note: Browsers usually only allow window.close() if the script opened the tab, 
-      // but it's worth having as a courtesy.
       window.close();
     }, 5000);
   </script>
